@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3ece1">
+<meta name="description" content="Бумажный список задач: добавляй, отмечай, удаляй. Всё хранится в браузере.">
+<title>Бумажный список задач</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f3ece1'/%3E%3Cpath d='M8 11h16M8 16h16M8 21h10' stroke='%232f2a25' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Перейти к списку</a>
+
+<main id="main" class="sheet" aria-labelledby="title">
+  <header class="sheet__head">
+    <div>
+      <h1 id="title">Список задач</h1>
+      <p class="sheet__sub">Лист на сегодня. Всё сохраняется в этом браузере.</p>
+    </div>
+    <button id="theme" class="ghost" type="button" aria-label="Переключить тему" title="Светлая / тёмная тема">
+      <span id="theme-icon" aria-hidden="true">◐</span>
+    </button>
+  </header>
+
+  <form id="add-form" class="add" autocomplete="off">
+    <label class="visually-hidden" for="new-task">Новая задача</label>
+    <input id="new-task" name="task" type="text" maxlength="200" enterkeyhint="done"
+           placeholder="Что нужно сделать?" aria-describedby="hint">
+    <button class="add__btn" type="submit">Добавить</button>
+  </form>
+  <p id="hint" class="hint">Enter — добавить. Стрелки — навигация, Space — отметить, Delete — удалить.</p>
+
+  <div class="toolbar">
+    <div class="filters" role="tablist" aria-label="Фильтр задач">
+      <button class="chip is-on" data-filter="all" role="tab" aria-selected="true" type="button">Все</button>
+      <button class="chip" data-filter="active" role="tab" aria-selected="false" type="button">Активные</button>
+      <button class="chip" data-filter="done" role="tab" aria-selected="false" type="button">Готовые</button>
+    </div>
+    <button id="clear-done" class="link" type="button">Убрать готовые</button>
+  </div>
+
+  <ul id="list" class="list" aria-label="Задачи"></ul>
+
+  <p id="empty" class="empty" hidden>
+    <span class="empty__mark" aria-hidden="true">✎</span>
+    <span id="empty-text">Пока пусто. Запишите первую задачу.</span>
+  </p>
+
+  <footer class="sheet__foot">
+    <span id="counter" aria-live="polite">0 задач</span>
+    <span class="sheet__note">двойной клик по тексту — правка</span>
+  </footer>
+</main>
+
+<p id="announce" class="visually-hidden" role="status" aria-live="polite"></p>
+
+<template id="item-tpl">
+  <li class="task" data-id="">
+    <button class="task__check" type="button" aria-pressed="false">
+      <span class="task__box" aria-hidden="true"></span>
+      <span class="visually-hidden">Отметить выполненной</span>
+    </button>
+    <span class="task__text" tabindex="0"></span>
+    <button class="task__del" type="button" aria-label="Удалить задачу">
+      <span aria-hidden="true">×</span>
+    </button>
+  </li>
+</template>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
